@@ -33,3 +33,33 @@ def calculate_risk_score(time_horizon_years: int, goal: str, loss_reaction: str)
     
     return horizon_points + goal_points + loss_points
 
+
+def categorize_risk(score: int) -> dict:
+    if score < 0 or score > 9:
+        raise ValueError(f"Score must be between 0 and 9, got {score}")
+
+    if score <= 3:
+        return {
+            "category": "Conservative",
+            "reasoning": (
+                "Your answers suggest you'd rather protect what you have than chase higher returns. "
+                "A conservative approach favors steadier investments, even if it means slower growth."
+            ),
+        }
+    elif score <= 6:
+        return {
+            "category": "Moderate",
+            "reasoning": (
+                "Your answers suggest you're comfortable with some ups and downs in exchange for "
+                "better long-term growth, while still limiting how much you could lose at once."
+            ),
+        }
+    else:
+        return {
+            "category": "Aggressive",
+            "reasoning": (
+                "Your answers suggest you have the time and temperament to ride out significant "
+                "market swings in pursuit of the highest long-term growth potential."
+            ),
+        }
+
